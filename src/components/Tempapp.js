@@ -4,18 +4,18 @@ import './css/style.css';
 
 const Tempapp = () => {
 
-    const[city, setCity] = useState(null);
+    const[data, setData] = useState(null);
     const[search, setSearch] = useState("Mumbai");
 
     useEffect( () => {
 
         const fetchApi = async () => {
-
-            const url = `http://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=335f0ab3a87ff607247db168728e5ef6`
-            const response = await fetch(url);
+            
+            
+            const response = await fetch(`https://api.weatherbit.io/v2.0/current?city=${search}&key=78d2d2849fce4aa9975b406cb9acae9f&include=minutely`);
             const resJson = await response.json();
-            setCity(resJson.main)
-            // console.log(resJson);
+            setData(resJson.data)
+             console.log(resJson);
 
         };
 
@@ -35,14 +35,14 @@ const Tempapp = () => {
                         onChange= { (event) =>{ setSearch(event.target.value) } } />
                 </div>
 
-                {!city ? (
+                {!data ? (
                     <p className="error">No Data Found</p>
                 ) : (
                     <div>
                         <div className="info">
                         <h1>{search}</h1> 
-                        <h1 className="temp">{city.temp}&deg;C </h1>  
-                        <h3 className="high-low">Min: {city.temp_min}&deg;C/Max: {city.temp_max}&deg;C</h3>
+                        <h1 className="temp">{data[0].temp}&deg;C </h1>  
+                        {/* <h3 className="high-low">Min: {data.temp_min}&deg;C/Max: {data.temp_max}&deg;C</h3> */}
                         </div>
                     </div>
                 )}
